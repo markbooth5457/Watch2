@@ -9,7 +9,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var flagDict = ["Malta": "🇲🇹" ,"Argentina": "🇦🇷", "Mauritius":"🇲🇺", "Austria":"🇦🇹", "Maldives":"🇲🇻", "Australia":"🇦🇺","Tajikistan":"🇹🇯","Thailand":"🇹🇭", "Chad":"🇹🇩","Martinique":"🇲🇶","Mauritania":"🇲🇷","Antarctica":"🇦🇶","Montserrat":"🇲🇸","Togo":"🇹🇬","Malawi":"🇲🇼","Mexico":"🇲🇽","Malaysia":"🇲🇾","Timor-Leste":"🇹🇱","Hong Kong":"🇭🇰"]
+    @State private var flagDict = ["Malta": "🇲🇹" ,"Argentina": "🇦🇷",
+    "Mauritius":"🇲🇺", "Austria":"🇦🇹", "Maldives":"🇲🇻",
+    "Australia":"🇦🇺","Tajikistan":"🇹🇯","Thailand":"🇹🇭",
+    "Chad":"🇹🇩","Martinique":"🇲🇶","Mauritania":"🇲🇷",
+    "Antarctica":"🇦🇶","Montserrat":"🇲🇸","Togo":"🇹🇬",
+    "Malawi":"🇲🇼","Mexico":"🇲🇽","Malaysia":"🇲🇾",
+    "Timor-Leste":"🇹🇱","Hong Kong":"🇭🇰"]
     // set default first selection of keys - gets reset when alert is dismissed
     @State private var keys = ["Malta", "Argentina", "Austria", "Maldives"]
     @State private var correctAnswer = Int.random(in: 0...3)
@@ -17,6 +23,7 @@ struct ContentView: View {
     @State private var played = 0
     @State private var correct = 0
     @State private var scoreTitle = ""
+    @State private var numberTapped = 0
     var body: some View {
         ZStack{
             LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
@@ -55,13 +62,16 @@ struct ContentView: View {
         }
             
         .alert(isPresented: $showingScore){
-            Alert(title: Text(scoreTitle ), message: Text("Your score is \(correct) out of \(played)"), dismissButton: .default(Text("Continue")) {
-                self.askQuestion()
+            Alert(title: Text(scoreTitle ), message:
+                Text("That's the flag of \(self.keys[self.numberTapped] )\n \(correct) out of \(played)"),
+                  dismissButton: .default(Text("Continue")) {
+                    self.askQuestion()
                 } )
         }
     }
     func flagTapped(_ number : Int)  {
         played += 1
+        numberTapped = number
         if number == correctAnswer {
             scoreTitle = "Correct"
             correct += 1
