@@ -63,7 +63,7 @@ struct ContentView: View {
             
         .alert(isPresented: $showingScore){
             Alert(title: Text(scoreTitle ), message:
-                Text("That's the flag of \(self.keys[self.numberTapped] )\n \(correct) out of \(played)"),
+                Text("\( self.flagDict [self.keys[self.numberTapped]] ?? "That " )is the flag of \n \(self.keys[self.numberTapped] )\n \(correct) out of \(played)"),
                   dismissButton: .default(Text("Continue")) {
                     self.askQuestion()
                 } )
